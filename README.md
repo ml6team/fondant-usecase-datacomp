@@ -13,13 +13,7 @@ the [official paper](https://arxiv.org/pdf/2307.03132.pdf).
 
 ## Pipeline Overview
 
-The image below shows the entire pipeline and its workflow. Note that this workflow is currently
-adapted to the interior design domain, but can be easily adapted to other domains by changing the
-prompt generation component.
-
-![Image](docs/art/pipelines/interior_design/controlnet-interior-design-pipeline.png)
-
-There are 5 components in total, these are:
+There are 7 components in total, these are:
 
 1. [**Load from hf hub**](components/generate_prompts): The pipeline begins by loading the initial
    datacomp data which we hosted on the Hugginface hub.
