@@ -20,7 +20,7 @@ try:
 
     ccl_cuda_success = True
     print("ccl_cuda successfully not installed!")
-except:
+except Exception:
     print("ccl_cuda is not installed!")
 
 
@@ -196,7 +196,7 @@ class FASTHead(nn.Module):
             for block_config in config["blocks"]:
                 blocks.append(set_layer_from_config(block_config))
             return FASTHead(conv, blocks, final, **kwargs)
-        except:
+        except Exception:
             return FASTHead(conv, None, final, **kwargs)
 
 
