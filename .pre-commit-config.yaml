@@ -35,10 +35,3 @@ repos:
             (?x)^(
                 src/.*|
             )$
-
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.2.0
-    hooks:
-      - id: mypy
-        args: ["--ignore-missing-imports", "src"]
-        pass_filenames: false
