@@ -15,14 +15,14 @@ N_ROWS_TO_LOAD = 10  # Set to None to load all rows
 IMAGE_SIZE = 256
 
 # Create data directory if it doesn't exist and if it's a local path
-if fsspec.core.url_to_fs(BASE_PATH)[0].protocol == ('file', 'local'):
+if fsspec.core.url_to_fs(BASE_PATH)[0].protocol == ("file", "local"):
     Path(BASE_PATH).mkdir(parents=True, exist_ok=True)
 
 # Initialize pipeline and client
 pipeline = Pipeline(
     pipeline_name="datacomp-filtering-pipeline",
     pipeline_description="A pipeline for filtering the Datacomp dataset",
-    base_path=BASE_PATH
+    base_path=BASE_PATH,
 )
 
 # define ops
