@@ -47,16 +47,16 @@ load_from_hub_op = ComponentOp(
     },
 )
 
-download_images_op = ComponentOp(
-    component_dir="components/download_images",
+download_images_op = ComponentOp.from_registry(
+    name="download_images",
     arguments={
         "retries": 2,
         "min_image_size": 0,
     },
 )
 
-resize_images = ComponentOp.from_registry(
-    name="resize_images",
+resize_images = ComponentOp(
+    component_dir="components/resize_images",
     arguments={
         "resize_width": IMAGE_SIZE,
         "resize_height": IMAGE_SIZE,
