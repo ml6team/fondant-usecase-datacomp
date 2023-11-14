@@ -8,14 +8,14 @@ function usage {
                                              The tag is set in the component specifications"
   echo "  -d,  --components-dir <value>      Directory containing components to build as subdirectories.
                                              The path should be relative to the root directory (default:src/components)"
-  echo "  -r,  --registry <value>            The docker registry prefix to use (default: null for DockerHub)"
-  echo "  -n,  --namespace <value>           The DockerHub namespace for the built images (default: ml6team)"
+  echo "  -r,  --registry <value>            The container registry prefix to use e.g. ghcr(default: null (DockerHub))"
+  echo "  -n,  --namespace <value>           The registry namespace for the built images (default: ml6team)"
   echo "  -co, --component <value>           Specific component to build. Pass the component subdirectory name(s) to build
                                              certain component(s) or 'all' to build all components in the components
                                              directory (default: all)"
   echo "  -r,  --repo <value>                Set the repo (default: ml6team/fondant-usecase-datacomp)"
   echo "  -l,  --label <value>               Set a container label, repeatable
-                                             (e.g. org.opencontainers.image.source=https://github.com/ml6team/fondant-usecase-datacomp)"
+                                             (e.g. org.opencontainers.image.source=https://github.com/ml6team/fondant-usecase-RAG)"
   echo "  -h,  --help                        Display this help message"
 }
 
@@ -58,7 +58,6 @@ for dir in "${components_to_build[@]}"; do
 
   full_image_name=${registry}/${namespace}/${BASENAME}:${tag}
   echo "Tagging image as $full_image_name"
-  fondant build $dir -t $full_image_name --nocache "${labels[@]/#/--label }"
-
+  fondant build $dir -t $full_image_name --nocache ${labels[@]/#/--label }
   popd
 done
