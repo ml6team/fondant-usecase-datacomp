@@ -6,7 +6,7 @@ import logging
 import fsspec
 from pathlib import Path
 
-from fondant.pipeline import ComponentOp, Pipeline
+from fondant.pipeline import ComponentOp, Pipeline, Resources
 
 logger = logging.getLogger(__name__)
 
@@ -69,8 +69,10 @@ detect_text_op = ComponentOp(
         "batch_size": 8,
         "image_size": IMAGE_SIZE,
     },
-    accelerator_name="GPU",
-    number_of_accelerators=1,
+    resources=Resources(
+        accelerator_number=1,
+        accelerator_name="GPU",
+    ),
 )
 mask_images_op = ComponentOp(
     component_dir="components/mask_images",
@@ -81,8 +83,10 @@ embed_images_op = ComponentOp.from_registry(
     arguments={
         "batch_size": 8,
     },
-    accelerator_name="GPU",
-    number_of_accelerators=1,
+    resources=Resources(
+        accelerator_number=1,
+        accelerator_name="GPU",
+    ),
 )
 add_clip_score_op = ComponentOp(
     component_dir="components/add_clip_score",
