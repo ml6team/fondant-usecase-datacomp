@@ -1,2 +1,2 @@
 Pillow==10.0.1
-fondant[aws,azure,gcp]==0.6.2
+fondant[aws,azure,gcp, component]==0.8dev5

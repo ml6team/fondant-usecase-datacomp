@@ -3,22 +3,18 @@ description: Component that detects text in images using an mmocr model
 image: ghcr.io/ml6team/detect_text:0.6.2
 
 consumes:
-  images:
-    fields:
-      data:
-        type: binary
+  image:
+    type: binary
 
 produces:
-  images:
-    fields:
-      data:
-        type: binary
-      boxes:
-        type: array
-        items:
-          type: array
-          items:
-            type: int32
+  image:
+    type: binary
+  face_bboxes:
+    type: array
+    items:
+      type: array
+      items:
+        type: int32
 
 args:
   batch_size:

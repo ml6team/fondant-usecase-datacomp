@@ -160,7 +160,7 @@ class DetectTextComponent(PandasTransformComponent):
         return self.model
 
     def transform(self, dataframe: pd.DataFrame) -> pd.DataFrame:
-        images = dataframe["images"]["data"]
+        images = dataframe["images"]
 
         results: t.List[pd.Series] = []
         for batch in np.split(
@@ -182,5 +182,4 @@ class DetectTextComponent(PandasTransformComponent):
                 results.append(boxes)
 
         result = pd.concat(results).to_frame(name=("images", "boxes"))
-
-        return pd.concat([dataframe, result], axis=1)
+        return result

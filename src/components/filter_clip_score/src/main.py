@@ -27,7 +27,7 @@ class FilterTextComplexity(PandasTransformComponent):
         logger.info("Filtering on clip scores...")
         logger.info(f"Initial length: {len(dataframe)}")
 
-        clip_scores = dataframe["imagetext"]["clipl14score"]
+        clip_scores = dataframe["image_text_clipl14score"]
 
         if self.pct_threshold and self.threshold_score is None:
             sorted_clip_scores = clip_scores.sort_values(ascending=False)
