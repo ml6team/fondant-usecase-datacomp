@@ -1,7 +1,17 @@
 # DataComp pipeline
 
+<p align="center">
+    <a href="https://github.com/ml6team/fondant">
+        <img src="https://raw.githubusercontent.com/ml6team/fondant/main/docs/art/fondant_banner.svg" height="150px"/>
+    </a>
+</p>
+<p align="center">
+</p>
+
 ## Introduction
 
+This repository contains a [Fondant](https://fondant.ai) pipeline, to generate a dataset for 
+DataComp. 
 [DataComp](https://www.datacomp.ai/) is a competition organized by the University of Washington and
 others to come up with the best possible image-text dataset to train a fixed CLIP model. Hence, it's
 an ideal use case for Fondant, as we can leverage reusable components to filter large, noisy
