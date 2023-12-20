@@ -161,11 +161,10 @@ class DetectTextComponent(PandasTransformComponent):
         return self.model
 
     def transform(self, dataframe: pd.DataFrame) -> pd.DataFrame:
-        images = dataframe[["image"]]
-        images_series = dataframe["image"]
         results = []
         for batch in np.split(
-            images_series, np.arange(self.batch_size, len(images), self.batch_size)
+            dataframe["image"],
+            np.arange(self.batch_size, len(dataframe), self.batch_size),
         ):
             if not batch.empty:
                 image_tensors = process_image_batch(
@@ -182,5 +181,5 @@ class DetectTextComponent(PandasTransformComponent):
 
                 results.extend(boxes)
 
-        images["face_bboxes"] = results
-        return images
+        dataframe["face_bboxes"] = results
+        return dataframe
