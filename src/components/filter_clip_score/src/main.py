@@ -19,7 +19,7 @@ class FilterTextComplexity(PandasTransformComponent):
         *args,
         pct_threshold: t.Optional[float],
         threshold_score: t.Optional[float],
-        **kwargs
+        **kwargs,
     ):
         self.pct_threshold = pct_threshold
         self.threshold_score = threshold_score

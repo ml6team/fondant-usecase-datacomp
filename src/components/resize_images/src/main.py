@@ -26,4 +26,3 @@ class ResizeImagesComponent(PandasTransformComponent):
         logger.info("Resizing images...")
         dataframe["images"] = dataframe["image"].apply(self.resize_image)
         return dataframe
-

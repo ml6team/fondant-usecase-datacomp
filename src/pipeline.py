@@ -39,15 +39,13 @@ dataset_from_hf_hub = pipeline.read(
         "uid": pa.string(),
         "clip_b32_similarity_score": pa.float32(),
         "clip_l14_similarity_score": pa.float32(),
-        "clip_l14_text_embedding": pa.list_(pa.float64())
-    }
+        "clip_l14_text_embedding": pa.list_(pa.float64()),
+    },
 )
 
 images = dataset_from_hf_hub.apply(
     "download_images",
-    consumes={
-        "image_url": "url"
-    },
+    consumes={"image_url": "url"},
     arguments={
         "retries": 2,
         "min_image_size": 0,
@@ -55,12 +53,12 @@ images = dataset_from_hf_hub.apply(
 )
 
 resized_images = images.apply(
-     "components/resize_images",
-     arguments={
-         "resize_width": IMAGE_SIZE,
-         "resize_height": IMAGE_SIZE,
-     }
- )
+    "components/resize_images",
+    arguments={
+        "resize_width": IMAGE_SIZE,
+        "resize_height": IMAGE_SIZE,
+    },
+)
 
 detected_text = resized_images.apply(
     "components/detect_text",
@@ -68,7 +66,7 @@ detected_text = resized_images.apply(
         "batch_size": 8,
         "image_size": IMAGE_SIZE,
     },
-    resources=Resources(accelerator_name="GPU", accelerator_number=1)
+    resources=Resources(accelerator_name="GPU", accelerator_number=1),
 )
 
 mask_images = detected_text.apply(
@@ -80,19 +78,13 @@ embedded_images = mask_images.apply(
     arguments={
         "batch_size": 8,
     },
-    resources=Resources(accelerator_name="GPU", accelerator_number=1)
+    resources=Resources(accelerator_name="GPU", accelerator_number=1),
 )
 
 images_with_clip_score = embedded_images.apply(
-    "components/add_clip_score",
-    consumes={
-        "text_embedding": "clip_l14_text_embedding"
-    }
+    "components/add_clip_score", consumes={"text_embedding": "clip_l14_text_embedding"}
 )
 
 filtered_clip_score_op = images_with_clip_score.apply(
-    "components/filter_clip_score",
-    arguments={
-        "threshold_score": 0.19
-    }
+    "components/filter_clip_score", arguments={"threshold_score": 0.19}
 )

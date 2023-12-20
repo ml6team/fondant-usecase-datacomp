@@ -34,6 +34,7 @@ class AddClipScore(PandasTransformComponent):
     def transform(self, dataframe: pd.DataFrame) -> pd.DataFrame:
         logger.info("Adding CLIP score...")
         dataframe["image_text_clipl14score"] = dataframe.apply(
-            lambda x: compute_clip_score(x["embedding"], x["text_embedding"]), axis=1)
+            lambda x: compute_clip_score(x["embedding"], x["text_embedding"]), axis=1
+        )
 
         return dataframe
