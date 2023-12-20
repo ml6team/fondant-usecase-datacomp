@@ -40,8 +40,7 @@ dataset_from_hf_hub = pipeline.read(
         "clip_b32_similarity_score": pa.float32(),
         "clip_l14_similarity_score": pa.float32(),
         "clip_l14_text_embedding": pa.list_(pa.float64())
-    },
-    cache=True
+    }
 )
 
 images = dataset_from_hf_hub.apply(
@@ -73,7 +72,7 @@ detected_text = resized_images.apply(
 )
 
 mask_images = detected_text.apply(
-    "components/mask_images"
+    "components/mask_images",
 )
 
 embedded_images = mask_images.apply(
@@ -94,6 +93,6 @@ images_with_clip_score = embedded_images.apply(
 filtered_clip_score_op = images_with_clip_score.apply(
     "components/filter_clip_score",
     arguments={
-        "threshold_score": 0.19,
+        "threshold_score": 0.19
     }
 )

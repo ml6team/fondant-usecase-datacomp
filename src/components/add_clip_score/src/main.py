@@ -28,13 +28,12 @@ class AddClipScore(PandasTransformComponent):
     image and text embeddings.
     """
 
-    def __init__(self, *args) -> None:
+    def __init__(self, *args, **kwargs) -> None:
         pass
 
     def transform(self, dataframe: pd.DataFrame) -> pd.DataFrame:
         logger.info("Adding CLIP score...")
-
         dataframe["image_text_clipl14score"] = dataframe.apply(
-            lambda x: compute_clip_score(x["embeddings"], x["text_embedding"]))
+            lambda x: compute_clip_score(x["embedding"], x["text_embedding"]), axis=1)
 
         return dataframe

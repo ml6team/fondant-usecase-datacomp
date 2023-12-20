@@ -19,7 +19,7 @@ try:
     from models.post_processing.ccl import ccl_cuda
 
     ccl_cuda_success = True
-    print("ccl_cuda successfully not installed!")
+    print("ccl_cuda successfully installed!")
 except Exception:
     print("ccl_cuda is not installed!")
 
@@ -143,7 +143,7 @@ class FASTHead(nn.Module):
 
         results = []
         for i in range(batch_size):
-            bboxes, scores = generate_bbox(
+            bboxes, scores = generate_bbox.generate_bbox(
                 keys[i], labels[i], score_maps[i], scales, cfg
             )
             results.append(dict(bboxes=bboxes, scores=scores))
