@@ -16,6 +16,8 @@ IMAGE_SIZE = 256
 # Create data directory if it doesn't exist
 Path(BASE_PATH).mkdir(parents=True, exist_ok=True)
 
+# fmt: off
+
 # Initialize pipeline and client
 pipeline = Pipeline(
     name="datacomp-filtering-pipeline",
@@ -82,9 +84,17 @@ embedded_images = mask_images.apply(
 )
 
 images_with_clip_score = embedded_images.apply(
-    "components/add_clip_score", consumes={"text_embedding": "clip_l14_text_embedding"}
+    "components/add_clip_score",
+    consumes={
+        "text_embedding": "clip_l14_text_embedding"
+    }
 )
 
 filtered_clip_score_op = images_with_clip_score.apply(
-    "components/filter_clip_score", arguments={"threshold_score": 0.19}
+    "components/filter_clip_score",
+    arguments={
+        "threshold_score": 0.19
+    }
 )
+
+# fmt: on
