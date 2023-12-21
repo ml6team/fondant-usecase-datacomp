@@ -16,8 +16,9 @@ from PIL import Image
 from mmengine.config import Config
 
 from augmentations import SquarePadResizeNorm
-from models import build_model
-from models.utils import fuse_module, rep_model_convert
+from models.builder import build_model
+from models.utils.rep_model_convert import rep_model_convert
+from models.utils.fuse_conv_bn import fuse_module
 
 from huggingface_hub import hf_hub_download
 
@@ -114,7 +115,7 @@ def detect_text_batch(
 class DetectTextComponent(PandasTransformComponent):
     """Component that detects text in images using an mmocr model."""
 
-    def __init__(self, *_, batch_size: int, image_size: int):
+    def __init__(self, *_, batch_size: int, image_size: int, **kwargs):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         logger.info(f"Device: {self.device}")
 
@@ -160,11 +161,10 @@ class DetectTextComponent(PandasTransformComponent):
         return self.model
 
     def transform(self, dataframe: pd.DataFrame) -> pd.DataFrame:
-        images = dataframe["images"]["data"]
-
-        results: t.List[pd.Series] = []
+        results = []
         for batch in np.split(
-            images, np.arange(self.batch_size, len(images), self.batch_size)
+            dataframe["image"],
+            np.arange(self.batch_size, len(dataframe), self.batch_size),
         ):
             if not batch.empty:
                 image_tensors = process_image_batch(
@@ -179,8 +179,7 @@ class DetectTextComponent(PandasTransformComponent):
                     index=batch.index,
                 ).T
 
-                results.append(boxes)
+                results.extend(boxes)
 
-        result = pd.concat(results).to_frame(name=("images", "boxes"))
-
-        return pd.concat([dataframe, result], axis=1)
+        dataframe["face_bboxes"] = results
+        return dataframe

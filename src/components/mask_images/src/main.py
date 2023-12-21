@@ -41,15 +41,13 @@ class MaskImagesComponent(PandasTransformComponent):
     [T-MARS](https://arxiv.org/abs/2307.03132).
     """
 
-    def __init__(self, *args) -> None:
+    def __init__(self, *args, **kwargs) -> None:
         pass
 
     def transform(self, dataframe: pd.DataFrame) -> pd.DataFrame:
         logger.info("Masking images based on boxes...")
-        result = dataframe["images"].apply(
-            lambda x: mask_image(x.data, x.boxes), axis=1
+        dataframe["image"] = dataframe.apply(
+            lambda x: mask_image(x["image"], x["face_bboxes"]), axis=1
         )
-
-        dataframe[("images", "data")] = result
 
         return dataframe

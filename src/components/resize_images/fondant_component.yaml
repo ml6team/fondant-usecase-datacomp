@@ -1,18 +1,14 @@
 name: Resize images
 description: Component that resizes images based on given width and height
-image: fndnt/resize_images:dev
+image: fndnt/resize_images:0.8.0
 
 consumes:
-  images:
-    fields:
-      data:
-        type: binary
+  image:
+    type: binary
 
 produces:
-  images:
-    fields:
-      data:
-        type: binary
+  image:
+    type: binary
 
 args:
   resize_width:
